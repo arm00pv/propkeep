@@ -1,0 +1,255 @@
+{"source": "Alabama", "relation": "security_deposit_limit", "target": "1 month rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Alabama", "relation": "deposit_return_deadline_days", "target": "35", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Alabama", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Alabama", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Alabama", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Alaska", "relation": "security_deposit_limit", "target": "2 months rent (no children), 1 month (with children under 18)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Alaska", "relation": "deposit_return_deadline_days", "target": "14", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Alaska", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Alaska", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Alaska", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Arizona", "relation": "security_deposit_limit", "target": "1.5 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Arizona", "relation": "deposit_return_deadline_days", "target": "14", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Arizona", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Arizona", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Arizona", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Arkansas", "relation": "security_deposit_limit", "target": "2 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Arkansas", "relation": "deposit_return_deadline_days", "target": "60", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Arkansas", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Arkansas", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Arkansas", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "California", "relation": "security_deposit_limit", "target": "2 months rent (unfurnished), 3 months (furnished), 1 month if 2+ years", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "California", "relation": "deposit_return_deadline_days", "target": "21", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "California", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "California", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "California", "relation": "rent_control", "target": "yes (15+ cities)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Colorado", "relation": "security_deposit_limit", "target": "2 months rent (maximum)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Colorado", "relation": "deposit_return_deadline_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Colorado", "relation": "notice_to_vacate_days", "target": "21", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Colorado", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Colorado", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Connecticut", "relation": "security_deposit_limit", "target": "2 months rent (tenants 65+ limited to 1 month)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Connecticut", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Connecticut", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Connecticut", "relation": "eviction_notice_days", "target": "15", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Connecticut", "relation": "rent_control", "target": "limited", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Delaware", "relation": "security_deposit_limit", "target": "1 month rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Delaware", "relation": "deposit_return_deadline_days", "target": "20", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Delaware", "relation": "notice_to_vacate_days", "target": "60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Delaware", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Delaware", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Florida", "relation": "security_deposit_limit", "target": "1 month rent (no pet/no water furniture), more with conditions", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Florida", "relation": "deposit_return_deadline_days", "target": "15/30/45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Florida", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Florida", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Florida", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Georgia", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Georgia", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Georgia", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Georgia", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Georgia", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Hawaii", "relation": "security_deposit_limit", "target": "1 month rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Hawaii", "relation": "deposit_return_deadline_days", "target": "14", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Hawaii", "relation": "notice_to_vacate_days", "target": "28/45", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Hawaii", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Hawaii", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Idaho", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Idaho", "relation": "deposit_return_deadline_days", "target": "21", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Idaho", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Idaho", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Idaho", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Illinois", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Illinois", "relation": "deposit_return_deadline_days", "target": "30/45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Illinois", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Illinois", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Illinois", "relation": "rent_control", "target": "limited (Evanston)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Indiana", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Indiana", "relation": "deposit_return_deadline_days", "target": "45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Indiana", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Indiana", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Indiana", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Iowa", "relation": "security_deposit_limit", "target": "2 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Iowa", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Iowa", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Iowa", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Iowa", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Kansas", "relation": "security_deposit_limit", "target": "1 month rent (unfurnished), 1.5 months (furnished)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Kansas", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Kansas", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Kansas", "relation": "eviction_notice_days", "target": "14", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Kansas", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Kentucky", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Kentucky", "relation": "deposit_return_deadline_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Kentucky", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Kentucky", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Kentucky", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Louisiana", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Louisiana", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Louisiana", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Louisiana", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Louisiana", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Maine", "relation": "security_deposit_limit", "target": "2 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Maine", "relation": "deposit_return_deadline_days", "target": "21", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Maine", "relation": "notice_to_vacate_days", "target": "30/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Maine", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Maine", "relation": "rent_control", "target": "limited", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Maryland", "relation": "security_deposit_limit", "target": "1-2 months rent based on county", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Maryland", "relation": "deposit_return_deadline_days", "target": "45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Maryland", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Maryland", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Maryland", "relation": "rent_control", "target": "yes (some counties)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Massachusetts", "relation": "security_deposit_limit", "target": "1 month rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Massachusetts", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Massachusetts", "relation": "notice_to_vacate_days", "target": "30/90 (week-to-week 7 or 30)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Massachusetts", "relation": "eviction_notice_days", "target": "14", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Massachusetts", "relation": "rent_control", "target": "yes (some cities)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Michigan", "relation": "security_deposit_limit", "target": "1.5 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Michigan", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Michigan", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Michigan", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Michigan", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Minnesota", "relation": "security_deposit_limit", "target": "no statutory limit generally", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Minnesota", "relation": "deposit_return_deadline_days", "target": "21", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Minnesota", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Minnesota", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Minnesota", "relation": "rent_control", "target": "limited", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Mississippi", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Mississippi", "relation": "deposit_return_deadline_days", "target": "45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Mississippi", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Mississippi", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Mississippi", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Missouri", "relation": "security_deposit_limit", "target": "2 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Missouri", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Missouri", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Missouri", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Missouri", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Montana", "relation": "security_deposit_limit", "target": "1 month rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Montana", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Montana", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Montana", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Montana", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Nebraska", "relation": "security_deposit_limit", "target": "1 month rent (unfurnished), 2 months (furnished)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Nebraska", "relation": "deposit_return_deadline_days", "target": "14", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Nebraska", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Nebraska", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Nebraska", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Nevada", "relation": "security_deposit_limit", "target": "3 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Nevada", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Nevada", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Nevada", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Nevada", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Hampshire", "relation": "security_deposit_limit", "target": "1 month rent (or 1.5 with pets/furniture)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New Hampshire", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New Hampshire", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Hampshire", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Hampshire", "relation": "rent_control", "target": "limited", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Jersey", "relation": "security_deposit_limit", "target": "1.5 months rent (up to 2.5 with conditions)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New Jersey", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New Jersey", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Jersey", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Jersey", "relation": "rent_control", "target": "yes (statewide)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Mexico", "relation": "security_deposit_limit", "target": "1 month rent (no pet/furniture), 2 months with", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New Mexico", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New Mexico", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Mexico", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New Mexico", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New York", "relation": "security_deposit_limit", "target": "1 month rent (up to 2 months for furnished)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New York", "relation": "deposit_return_deadline_days", "target": "14/30/60", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "New York", "relation": "notice_to_vacate_days", "target": "30/60/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New York", "relation": "eviction_notice_days", "target": "14", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "New York", "relation": "rent_control", "target": "yes (statewide stabilized)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "North Carolina", "relation": "security_deposit_limit", "target": "1.5 months rent (2 months if week-to-week)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "North Carolina", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "North Carolina", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "North Carolina", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "North Carolina", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "North Dakota", "relation": "security_deposit_limit", "target": "1 month rent (or 2 with conditions)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "North Dakota", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "North Dakota", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "North Dakota", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "North Dakota", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Ohio", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Ohio", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Ohio", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Ohio", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Ohio", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Oklahoma", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Oklahoma", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Oklahoma", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Oklahoma", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Oklahoma", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Oregon", "relation": "security_deposit_limit", "target": "1 month rent (1.5 with conditions)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Oregon", "relation": "deposit_return_deadline_days", "target": "31", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Oregon", "relation": "notice_to_vacate_days", "target": "30/60/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Oregon", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Oregon", "relation": "rent_control", "target": "yes (statewide)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Pennsylvania", "relation": "security_deposit_limit", "target": "2 months rent (first year), 1 month after", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Pennsylvania", "relation": "deposit_return_deadline_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Pennsylvania", "relation": "notice_to_vacate_days", "target": "30/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Pennsylvania", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Pennsylvania", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Rhode Island", "relation": "security_deposit_limit", "target": "1 month rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Rhode Island", "relation": "deposit_return_deadline_days", "target": "20", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Rhode Island", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Rhode Island", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Rhode Island", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "South Carolina", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "South Carolina", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "South Carolina", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "South Carolina", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "South Carolina", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "South Dakota", "relation": "security_deposit_limit", "target": "1 month rent (or 2 with conditions)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "South Dakota", "relation": "deposit_return_deadline_days", "target": "14/30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "South Dakota", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "South Dakota", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "South Dakota", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Tennessee", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Tennessee", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Tennessee", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Tennessee", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Tennessee", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Texas", "relation": "security_deposit_limit", "target": "no statutory limit generally", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Texas", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Texas", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Texas", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Texas", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Utah", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Utah", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Utah", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Utah", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Utah", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Vermont", "relation": "security_deposit_limit", "target": "no statutory limit (first month typical)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Vermont", "relation": "deposit_return_deadline_days", "target": "14", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Vermont", "relation": "notice_to_vacate_days", "target": "30/60/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Vermont", "relation": "eviction_notice_days", "target": "14", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Vermont", "relation": "rent_control", "target": "yes (Burlington)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Virginia", "relation": "security_deposit_limit", "target": "2 months rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Virginia", "relation": "deposit_return_deadline_days", "target": "45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Virginia", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Virginia", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Virginia", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Washington", "relation": "security_deposit_limit", "target": "1 month rent (unfurnished), 3 months (furnished)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Washington", "relation": "deposit_return_deadline_days", "target": "21", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Washington", "relation": "notice_to_vacate_days", "target": "20/30/60/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Washington", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Washington", "relation": "rent_control", "target": "limited (Seattle)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "West Virginia", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "West Virginia", "relation": "deposit_return_deadline_days", "target": "30/45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "West Virginia", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "West Virginia", "relation": "eviction_notice_days", "target": "10", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "West Virginia", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Wisconsin", "relation": "security_deposit_limit", "target": "no statutory limit generally", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Wisconsin", "relation": "deposit_return_deadline_days", "target": "21", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Wisconsin", "relation": "notice_to_vacate_days", "target": "28/60/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Wisconsin", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Wisconsin", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Wyoming", "relation": "security_deposit_limit", "target": "no statutory limit", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Wyoming", "relation": "deposit_return_deadline_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Wyoming", "relation": "notice_to_vacate_days", "target": "30", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Wyoming", "relation": "eviction_notice_days", "target": "3", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Wyoming", "relation": "rent_control", "target": "none", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Washington DC", "relation": "security_deposit_limit", "target": "1 month rent", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Washington DC", "relation": "deposit_return_deadline_days", "target": "45", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Washington DC", "relation": "notice_to_vacate_days", "target": "30/90", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Washington DC", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Washington DC", "relation": "rent_control", "target": "yes (limited)", "domain": "propkeep_state", "confidence": 0.9}

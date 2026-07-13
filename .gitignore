@@ -1,0 +1,56 @@
+# Build artifacts
+app/flutter/build/
+**/build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+generated_plugin_registrant.dart
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*.swo
+
+# Sensitive data
+*.env
+.env
+.github_token
+*.key
+credentials.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Checkpoints (too large for git)
+checkpoints/*.pt
+checkpoints/*.pth
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Flutter generated
+app/flutter/ios/Pods/
+app/flutter/android/.gradle/
+app/flutter/ios/Flutter/Flutter.framework
+app/flutter/ios/Flutter/Flutter.podspec

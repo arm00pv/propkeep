@@ -253,3 +253,8 @@
 {"source": "Washington DC", "relation": "notice_to_vacate_days", "target": "30/90", "domain": "propkeep_state", "confidence": 0.9}
 {"source": "Washington DC", "relation": "eviction_notice_days", "target": "7", "domain": "propkeep_state", "confidence": 0.9}
 {"source": "Washington DC", "relation": "rent_control", "target": "yes (limited)", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Puerto Rico", "relation": "security_deposit_limit", "target": "2 months rent (unfurnished), 3 months (furnished)", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Puerto Rico", "relation": "deposit_return_deadline_days", "target": "30", "domain": "propkeep_state", "confidence": 0.95}
+{"source": "Puerto Rico", "relation": "notice_to_vacate_days", "target": "30/60", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Puerto Rico", "relation": "eviction_notice_days", "target": "5", "domain": "propkeep_state", "confidence": 0.9}
+{"source": "Puerto Rico", "relation": "rent_control", "target": "limited (rent stabilization in some municipalities)", "domain": "propkeep_state", "confidence": 0.9}

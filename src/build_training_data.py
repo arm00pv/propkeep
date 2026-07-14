@@ -123,6 +123,7 @@ STATE_DATA = [
     ["Wisconsin", "no statutory limit generally", "21", "28/60/90", "none", "no statutory cap, $5/day typical", "5", "none"],
     ["Wyoming", "no statutory limit", "30/60", "30", "none", "no statutory cap", "3", "none"],
     ["Washington DC", "1 month rent", "45", "30/90", "none", "no statutory cap, 10% typical", "7", "yes (limited)"],
+    ["Puerto Rico", "2 months rent (unfurnished), 3 months (furnished)", "30", "30/60", "none", "no statutory cap, must be reasonable", "5", "limited (rent stabilization in some municipalities)"],
 ]
 
 # ============================================================

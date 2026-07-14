@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace = "com.propkeep.propkeep"
-    compileSdk = 36
+    compileSdk = 36  // Android 16 (latest available SDK)
 
     defaultConfig {
         applicationId = "com.propkeep.propkeep"
-        minSdk = 31
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        minSdk = 34     // Android 14 (3 versions back: 14, 15, 16)
+        targetSdk = 36  // Android 16
+        versionCode = 2
+        versionName = "1.2.0"
     }
 
     buildTypes {

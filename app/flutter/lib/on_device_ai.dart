@@ -40,11 +40,11 @@ class KnowledgeBase {
     try {
       // Load Q&A pairs
       final qaData = await rootBundle.loadString('assets/data/propkeep_qa.jsonl');
-      _qaPairs = qaData.split('\n').where((l) => l.trim().isNotEmpty).map((l) => json.decode(l)).toList();
+      _qaPairs = qaData.split('\n').where((l) => l.trim().isNotEmpty).map((l) => json.decode(l) as Map<String, dynamic>).toList();
 
       // Load federal facts
       final factsData = await rootBundle.loadString('assets/data/propkeep_facts.jsonl');
-      _facts = factsData.split('\n').where((l) => l.trim().isNotEmpty).map((l) => json.decode(l)).toList();
+      _facts = factsData.split('\n').where((l) => l.trim().isNotEmpty).map((l) => json.decode(l) as Map<String, dynamic>).toList();
 
       // Load state facts
       final stateData = await rootBundle.loadString('assets/data/propkeep_state_facts.jsonl');
@@ -58,7 +58,7 @@ class KnowledgeBase {
 
       // Load scenarios
       final scData = await rootBundle.loadString('assets/data/propkeep_scenarios.jsonl');
-      _scenarios = scData.split('\n').where((l) => l.trim().isNotEmpty).map((l) => json.decode(l)).toList();
+      _scenarios = scData.split('\n').where((l) => l.trim().isNotEmpty).map((l) => json.decode(l) as Map<String, dynamic>).toList();
 
       _loaded = true;
     } catch (e) {
@@ -100,7 +100,7 @@ class KnowledgeBase {
     for (var state in states) {
       if (question.toLowerCase().contains(state.toLowerCase())) return state;
     }
-    for (var word in question.split()) {
+    for (var word in question.split(' ')) {
       if (abbrevs.containsKey(word.toUpperCase())) return abbrevs[word.toUpperCase()];
     }
     return null;
@@ -125,7 +125,7 @@ class KnowledgeBase {
     for (var qa in _qaPairs) {
       final qaText = (qa['question'] + ' ' + qa['answer']).toLowerCase();
       double score = 0;
-      for (var word in qLower.split()) {
+      for (var word in qLower.split(' ')) {
         if (word.length > 3 && qaText.contains(word)) score += 1;
       }
       if (state != null && qa['state'] == state) score += 5;
@@ -141,7 +141,7 @@ class KnowledgeBase {
     
     // Scenarios
     for (var sc in _scenarios) {
-      if (qLower.split().any((w) => w.length > 4 && sc['scenario'].toLowerCase().contains(w))) {
+      if (qLower.split(' ').any((w) => w.length > 4 && sc['scenario'].toLowerCase().contains(w))) {
         parts.add('\nSCENARIO: ${sc['scenario']}');
         parts.add('CORRECT: ${sc['correct_action']}');
       }
@@ -171,6 +171,7 @@ class KnowledgeBase {
   }
 
   static int get qaCount => _qaPairs.length;
+  static List<Map<String, dynamic>> get qaList => _qaPairs;
   static int get factCount => _facts.length;
   static int get stateCount => _stateFacts.length;
   static int get scenarioCount => _scenarios.length;

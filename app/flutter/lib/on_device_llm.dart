@@ -1,19 +1,4 @@
 // on_device_llm.dart — Real on-device LLM inference using flutter_litert_lm
-// 
-// This module provides ACTUAL on-device language model inference using
-// Google's LiteRT-LM runtime. It loads .litertlm model files and generates
-// responses entirely on-device — no internet needed, no API calls.
-//
-// Models supported:
-//   - Gemma 4 E2B Instruct (2.46GB) — best quality, needs ~4GB RAM
-//   - Qwen3 0.6B (475MB) — smaller, works on any phone
-//
-// Usage:
-//   final llm = OnDeviceLLM();
-//   await llm.loadModel();  // loads from app storage
-//   final answer = await llm.generate('How much security deposit in California?');
-//   await llm.dispose();
-
 import 'dart:io';
 import 'package:flutter_litert_lm/flutter_litert_lm.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,32 +8,42 @@ class OnDeviceLLM {
   static LiteLmEngine? _engine;
   static LiteLmConversation? _conversation;
   static bool _loaded = false;
-  static String? _modelPath;
   static String _modelName = 'None';
 
   static bool get isLoaded => _loaded;
   static String get modelName => _modelName;
 
-  /// Check if a model file exists in app storage
+  /// Find model file — checks multiple locations
   static Future<String?> findModel() async {
+    final locations = <String>[];
+    
+    // 1. App private storage (where downloaded models go)
     final dir = await getApplicationDocumentsDirectory();
+    locations.add('${dir.path}/gemma4-e2b.litertlm');
+    locations.add('${dir.path}/qwen3-0.6b.litertlm');
     
-    // Try Gemma 4 E2B first (better quality)
-    final gemmaPath = '${dir.path}/gemma4-e2b.litertlm';
-    if (await File(gemmaPath).exists() && await File(gemmaPath).length() > 100 * 1024 * 1024) {
-      return gemmaPath;
+    // 2. External storage / Download folder (where adb push goes)
+    locations.add('/sdcard/Download/gemma4-e2b.litertlm');
+    locations.add('/sdcard/Download/qwen3-0.6b.litertlm');
+    locations.add('/storage/emulated/0/Download/gemma4-e2b.litertlm');
+    locations.add('/storage/emulated/0/Download/qwen3-0.6b.litertlm');
+    
+    // 3. /data/local/tmp (where adb push goes by default)
+    locations.add('/data/local/tmp/gemma4-e2b.litertlm');
+    locations.add('/data/local/tmp/qwen3-0.6b.litertlm');
+    
+    for (var path in locations) {
+      try {
+        final file = File(path);
+        if (await file.exists() && await file.length() > 50 * 1024 * 1024) {
+          return path;
+        }
+      } catch (_) {}
     }
-    
-    // Fall back to Qwen3 0.6B (smaller)
-    final qwenPath = '${dir.path}/qwen3-0.6b.litertlm';
-    if (await File(qwenPath).exists() && await File(qwenPath).length() > 50 * 1024 * 1024) {
-      return qwenPath;
-    }
-    
     return null;
   }
 
-  /// Load the on-device model (call once at app startup or when user enables offline mode)
+  /// Load the on-device model
   static Future<bool> loadModel() async {
     if (_loaded) return true;
     
@@ -56,13 +51,12 @@ class OnDeviceLLM {
     if (path == null) return false;
     
     try {
-      _modelPath = path;
       _modelName = path.contains('gemma') ? 'Gemma 4 E2B' : 'Qwen3 0.6B';
       
       _engine = await LiteLmEngine.create(
         LiteLmEngineConfig(
           modelPath: path,
-          backend: LiteLmBackend.cpu,  // CPU works on all devices
+          backend: LiteLmBackend.cpu,
         ),
       );
       
@@ -85,7 +79,7 @@ class OnDeviceLLM {
       return true;
     } catch (e) {
       _loaded = false;
-      _modelName = 'Error: $e';
+      _modelName = 'Load error';
       return false;
     }
   }
@@ -93,17 +87,14 @@ class OnDeviceLLM {
   /// Generate a response using the on-device LLM with RAG context
   static Future<String> generate(String question, {String? state}) async {
     if (!_loaded || _conversation == null) {
-      // Fallback to knowledge base only (no LLM)
       return _knowledgeBaseFallback(question, state);
     }
     
     try {
-      // Get RAG context from bundled knowledge base
       await KnowledgeBase.load();
       final detectedState = state ?? KnowledgeBase.detectState(question);
       final context = KnowledgeBase.retrieveContext(question, detectedState);
       
-      // Build prompt with RAG context
       final prompt = '''
 LEGAL CONTEXT (from knowledge base):
 $context
@@ -112,7 +103,6 @@ QUESTION: $question
 
 Answer the question using the legal context above. Be specific and practical.''';
       
-      // Generate response using on-device LLM
       final reply = await _conversation!.sendMessage(prompt);
       return reply.text;
     } catch (e) {
@@ -120,42 +110,27 @@ Answer the question using the legal context above. Be specific and practical.'''
     }
   }
 
-  /// Stream tokens as they're generated (for typing indicator in UI)
-  static Stream<String> generateStream(String question, {String? state}) async* {
-    if (!_loaded || _conversation == null) {
-      yield _knowledgeBaseFallback(question, state);
-      return;
-    }
-    
-    try {
-      await KnowledgeBase.load();
-      final detectedState = state ?? KnowledgeBase.detectState(question);
-      final context = KnowledgeBase.retrieveContext(question, detectedState);
-      
-      final prompt = '''
-LEGAL CONTEXT (from knowledge base):
-$context
-
-QUESTION: $question
-
-Answer the question using the legal context above. Be specific and practical.''';
-      
-      await for (final delta in _conversation!.sendMessageStream(prompt)) {
-        yield delta.text;
-      }
-    } catch (e) {
-      yield _knowledgeBaseFallback(question, state);
-    }
-  }
-
-  /// Fallback: use knowledge base keyword matching (no LLM needed)
+  /// Knowledge base fallback (no LLM)
   static String _knowledgeBaseFallback(String question, String? state) {
-    // This is synchronous — used when LLM isn't loaded
-    // The caller should use generate() for the full experience
-    return 'On-device LLM not loaded. Using knowledge base fallback.';
+    final detectedState = state ?? KnowledgeBase.detectState(question);
+    var bestScore = 0.0;
+    Map<String, dynamic>? best;
+    for (var qa in KnowledgeBase.qaList) {
+      final qaText = (qa['question'] + ' ' + qa['answer']).toLowerCase();
+      double score = 0;
+      for (var word in question.toLowerCase().split(' ')) {
+        if (word.length > 3 && qaText.contains(word)) score += 1;
+      }
+      if (detectedState != null && qa['state'] == detectedState) score += 5;
+      if (score > bestScore) { bestScore = score; best = qa; }
+    }
+    if (best != null && bestScore > 0) {
+      if (detectedState != null) return '📍 $detectedState\n\n' + best!['answer'];
+      return best!['answer'];
+    }
+    return 'No specific information found. Try online mode for more answers.';
   }
 
-  /// Release resources
   static Future<void> dispose() async {
     await _conversation?.dispose();
     await _engine?.dispose();

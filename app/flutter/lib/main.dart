@@ -188,13 +188,17 @@ class _ChatScreenState extends State<ChatScreen> {
     bool rag = false;
     String? detectedState;
 
+    // Auto-detect state from question if not manually selected
+    final effectiveState = _selectedState ?? KnowledgeBase.detectState(question);
+    detectedState = effectiveState;
+    
     // Try online first (if hybrid or online mode)
     if (_mode == AIMode.online || _mode == AIMode.hybrid) {
       try {
         final res = await http.post(
           Uri.parse('$API_BASE/api/propkeep/ask/'),
           headers: {'Content-Type': 'application/json'},
-          body: json.encode({'question': question, if (_selectedState != null) 'state': _selectedState}),
+          body: json.encode({'question': question, if (effectiveState != null) 'state': effectiveState}),
         ).timeout(Duration(seconds: 90));
         
         if (res.statusCode == 200) {
@@ -216,7 +220,7 @@ class _ChatScreenState extends State<ChatScreen> {
       // Try on-device LLM if loaded
       if (_llmLoaded) {
         try {
-          answer = await OnDeviceLLM.generate(question, state: _selectedState);
+          answer = await OnDeviceLLM.generate(question, state: effectiveState);
           rag = true;
         } catch (_) {
           answer = _knowledgeBaseFallback(question);
@@ -230,7 +234,7 @@ class _ChatScreenState extends State<ChatScreen> {
               _llmLoaded = true;
               _modelName = OnDeviceLLM.modelName;
             });
-            answer = await OnDeviceLLM.generate(question, state: _selectedState);
+            answer = await OnDeviceLLM.generate(question, state: effectiveState);
             rag = true;
           } else {
             answer = _knowledgeBaseFallback(question);
@@ -240,8 +244,7 @@ class _ChatScreenState extends State<ChatScreen> {
         }
       }
       
-      // Detect state for display
-      detectedState = _selectedState ?? KnowledgeBase.detectState(question);
+      // State already detected above
     }
 
     setState(() {
@@ -259,6 +262,9 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   String _knowledgeBaseFallback(String question) {
+    // Auto-detect state from question
+    final detectedState = _selectedState ?? KnowledgeBase.detectState(question);
+    
     // Simple keyword matching from bundled knowledge base
     var bestScore = 0.0;
     Map<String, dynamic>? best;
@@ -268,10 +274,15 @@ class _ChatScreenState extends State<ChatScreen> {
       for (var word in question.toLowerCase().split(' ')) {
         if (word.length > 3 && qaText.contains(word)) score += 1;
       }
-      if (_selectedState != null && qa['state'] == _selectedState) score += 5;
+      // Boost state-specific matches
+      if (detectedState != null && qa['state'] == detectedState) score += 5;
       if (score > bestScore) { bestScore = score; best = qa; }
     }
     if (best != null && bestScore > 0) {
+      // Prepend state info if detected
+      if (detectedState != null) {
+        return '📍 $detectedState\n\n' + best!['answer'];
+      }
       return best!['answer'];
     }
     return 'No specific information found. Try online mode for more answers.';
@@ -333,9 +344,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     ],
                   )
                 else if (_modelAvailable)
-                  Text('Model ready (tap Ask to load)', style: TextStyle(color: Colors.amber, fontSize: 11))
+                  Text('Model ready', style: TextStyle(color: Colors.amber, fontSize: 10))
                 else
-                  Text('Online only', style: TextStyle(color: Colors.white30, fontSize: 11)),
+                  Text('Online only', style: TextStyle(color: Colors.white30, fontSize: 10)),
               ],
             ),
           ),
@@ -345,7 +356,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: DropdownButton<String>(
               value: _selectedState,
-              hint: Text('All States (auto-detect)', style: TextStyle(color: Colors.white54, fontSize: 14)),
+              hint: Text('All States (auto-detect from question)', style: TextStyle(color: Colors.white54, fontSize: 13)),
               isExpanded: true,
               dropdownColor: Color(0xFF151B2E),
               items: [
@@ -366,7 +377,12 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (ctx, i) => Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                 child: ActionChip(
-                  label: Text(_quickQuestions[i], style: TextStyle(fontSize: 11)),
+                  label: Text(
+                    _quickQuestions[i],
+                    style: TextStyle(fontSize: 11),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                   backgroundColor: Color(0xFF1E293B),
                   labelStyle: TextStyle(color: Colors.lightBlueAccent),
                   onPressed: () => _controller.text = _quickQuestions[i],
@@ -512,6 +528,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   fontSize: 14,
                   height: 1.5,
                 ),
+                overflow: TextOverflow.visible,
+                softWrap: true,
               ),
             ],
           ),

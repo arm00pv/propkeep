@@ -1,205 +1,20 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'on_device_ai.dart';
+import 'on_device_llm.dart';
 
 // ============================================================
-// CONFIG — API base URL
+// CONFIG
 // ============================================================
-// For development: use your machine's IP or Cloudflare tunnel
-// For production: your stable server URL
 const String API_BASE = 'https://novel-kenny-deployment-framed.trycloudflare.com';
 
 // ============================================================
-// MODELS
+// MAIN
 // ============================================================
-
-class PropkeepHealth {
-  final String status;
-  final String service;
-  final int qaPairs;
-  final int federalFacts;
-  final int states;
-  final int scenarios;
-
-  PropkeepHealth({
-    required this.status,
-    required this.service,
-    required this.qaPairs,
-    required this.federalFacts,
-    required this.states,
-    required this.scenarios,
-  });
-
-  factory PropkeepHealth.fromJson(Map<String, dynamic> json) {
-    return PropkeepHealth(
-      status: json['status'] ?? 'unknown',
-      service: json['service'] ?? 'PROPKEEP',
-      qaPairs: json['qa_pairs'] ?? 0,
-      federalFacts: json['federal_facts'] ?? 0,
-      states: json['states'] ?? 0,
-      scenarios: json['scenarios'] ?? 0,
-    );
-  }
-}
-
-class StateCompliance {
-  final String state;
-  final String securityDepositLimit;
-  final String depositReturnDeadlineDays;
-  final String noticeToVacateDays;
-  final String evictionNoticeDays;
-  final String rentControl;
-
-  StateCompliance({
-    required this.state,
-    required this.securityDepositLimit,
-    required this.depositReturnDeadlineDays,
-    required this.noticeToVacateDays,
-    required this.evictionNoticeDays,
-    required this.rentControl,
-  });
-
-  factory StateCompliance.fromJson(Map<String, dynamic> json) {
-    return StateCompliance(
-      state: json['state'] ?? '',
-      securityDepositLimit: json['security_deposit_limit'] ?? 'No statutory limit',
-      depositReturnDeadlineDays: json['deposit_return_deadline_days']?.toString() ?? 'Not specified',
-      noticeToVacateDays: json['notice_to_vacate_days']?.toString() ?? 'Not specified',
-      evictionNoticeDays: json['eviction_notice_days']?.toString() ?? 'Not specified',
-      rentControl: json['rent_control'] ?? 'None',
-    );
-  }
-}
-
-class AskResponse {
-  final String question;
-  final String answer;
-  final String? state;
-  final bool contextUsed;
-  final String? model;
-  final String? error;
-
-  AskResponse({
-    required this.question,
-    required this.answer,
-    this.state,
-    this.contextUsed = false,
-    this.model,
-    this.error,
-  });
-
-  factory AskResponse.fromJson(Map<String, dynamic> json) {
-    return AskResponse(
-      question: json['question'] ?? '',
-      answer: json['answer'] ?? 'No response',
-      state: json['state'],
-      contextUsed: json['context_used'] ?? false,
-      model: json['model'],
-      error: json['error'],
-    );
-  }
-}
-
-class Scenario {
-  final String scenario;
-  final String correctAction;
-  final String commonMistake;
-  final String penaltyIfWrong;
-
-  Scenario({
-    required this.scenario,
-    required this.correctAction,
-    required this.commonMistake,
-    required this.penaltyIfWrong,
-  });
-
-  factory Scenario.fromJson(Map<String, dynamic> json) {
-    return Scenario(
-      scenario: json['scenario'] ?? '',
-      correctAction: json['correct_action'] ?? '',
-      commonMistake: json['common_mistake'] ?? '',
-      penaltyIfWrong: json['penalty_if_wrong'] ?? '',
-    );
-  }
-}
-
-// ============================================================
-// API SERVICE
-// ============================================================
-
-class PropkeepApi {
-  static Future<PropkeepHealth> getHealth() async {
-    final res = await http.get(Uri.parse('$API_BASE/api/propkeep/health/')).timeout(Duration(seconds: 15));
-    return PropkeepHealth.fromJson(json.decode(res.body));
-  }
-
-  static Future<List<String>> getStates() async {
-    final res = await http.get(Uri.parse('$API_BASE/api/propkeep/states/')).timeout(Duration(seconds: 10));
-    final data = json.decode(res.body);
-    return List<String>.from(data['states'] ?? []);
-  }
-
-  static Future<StateCompliance> getCompliance(String state) async {
-    final res = await http.get(Uri.parse('$API_BASE/api/propkeep/compliance/?state=${Uri.encodeComponent(state)}')).timeout(Duration(seconds: 10));
-    return StateCompliance.fromJson(json.decode(res.body));
-  }
-
-  static Future<AskResponse> ask(String question, {String? state}) async {
-    final res = await http.post(
-      Uri.parse('$API_BASE/api/propkeep/ask/'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'question': question, if (state != null && state.isNotEmpty) 'state': state}),
-    ).timeout(Duration(seconds: 90));
-    return AskResponse.fromJson(json.decode(res.body));
-  }
-
-  static Future<List<Scenario>> getScenarios() async {
-    final res = await http.get(Uri.parse('$API_BASE/api/propkeep/scenarios/')).timeout(Duration(seconds: 10));
-    final data = json.decode(res.body);
-    return (data['scenarios'] as List?)?.map((s) => Scenario.fromJson(s)).toList() ?? [];
-  }
-}
-
-// ============================================================
-// THEME
-// ============================================================
-
-ThemeData _buildTheme() {
-  return ThemeData(
-    primarySwatch: Colors.green,
-    brightness: Brightness.dark,
-    scaffoldBackgroundColor: Color(0xFF0A0E27),
-    appBarTheme: AppBarTheme(
-      backgroundColor: Color(0xFF0A0E27),
-      elevation: 0,
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-      iconTheme: IconThemeData(color: Colors.white),
-    ),
-    cardTheme: CardThemeData(
-      color: Color(0xFF151B2E),
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Color(0xFF1A1F3A),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.white12)),
-      hintStyle: TextStyle(color: Colors.white30),
-    ),
-    textTheme: TextTheme(
-      bodyLarge: TextStyle(color: Colors.white),
-      bodyMedium: TextStyle(color: Colors.white70),
-      bodySmall: TextStyle(color: Colors.white54),
-    ),
-  );
-}
-
-// ============================================================
-// MAIN APP
-// ============================================================
-
 void main() {
   runApp(PropkeepApp());
 }
@@ -209,7 +24,27 @@ class PropkeepApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PROPKEEP',
-      theme: _buildTheme(),
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Color(0xFF0A0E27),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFF0A0E27),
+          elevation: 0,
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        cardTheme: CardThemeData(
+          color: Color(0xFF151B2E),
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Color(0xFF1A1F3A),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.white12)),
+          hintStyle: TextStyle(color: Colors.white30),
+        ),
+      ),
       home: MainScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -217,9 +52,13 @@ class PropkeepApp extends StatelessWidget {
 }
 
 // ============================================================
-// MAIN SCREEN — Bottom navigation: Chat, Compliance, Scenarios
+// AI MODE
 // ============================================================
+enum AIMode { online, offline, hybrid }
 
+// ============================================================
+// MAIN SCREEN
+// ============================================================
 class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -227,26 +66,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  PropkeepHealth? _health;
-  bool _healthLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadHealth();
-  }
-
-  void _loadHealth() async {
-    try {
-      final h = await PropkeepApi.getHealth();
-      setState(() {
-        _health = h;
-        _healthLoading = false;
-      });
-    } catch (e) {
-      setState(() => _healthLoading = false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          ChatScreen(health: _health),
+          ChatScreen(),
           ComplianceScreen(),
           ScenariosScreen(),
         ],
@@ -276,13 +95,9 @@ class _MainScreenState extends State<MainScreen> {
 }
 
 // ============================================================
-// CHAT SCREEN — Ask questions to the PROPKEEP brain
+// CHAT SCREEN — Uses hybrid online/offline AI
 // ============================================================
-
 class ChatScreen extends StatefulWidget {
-  final PropkeepHealth? health;
-  ChatScreen({this.health});
-
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -293,6 +108,10 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _loading = false;
   String? _selectedState;
   List<String> _states = [];
+  AIMode _mode = AIMode.hybrid;
+  bool _llmLoaded = false;
+  bool _modelAvailable = false;
+  String _modelName = 'None';
 
   final _quickQuestions = [
     "How much can I charge for a security deposit?",
@@ -308,15 +127,35 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _loadStates();
+    _initApp();
+  }
+
+  void _initApp() async {
+    await KnowledgeBase.load();
+    final s = await _getStates();
+    setState(() => _states = s);
+    
+    // Check if on-device model is available
+    final modelPath = await OnDeviceLLM.findModel();
+    setState(() {
+      _modelAvailable = modelPath != null;
+      _modelName = OnDeviceLLM.modelName;
+    });
+    
     _loadHistory();
   }
 
-  void _loadStates() async {
+  Future<List<String>> _getStates() async {
+    // Try online first
     try {
-      final s = await PropkeepApi.getStates();
-      setState(() => _states = s);
-    } catch (e) {}
+      final res = await http.get(Uri.parse('$API_BASE/api/propkeep/states/')).timeout(Duration(seconds: 5));
+      if (res.statusCode == 200) {
+        final data = json.decode(res.body);
+        return List<String>.from(data['states'] ?? []);
+      }
+    } catch (_) {}
+    // Fallback to on-device knowledge base
+    return KnowledgeBase.getStates();
   }
 
   void _loadHistory() async {
@@ -329,7 +168,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _saveHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    // Keep only last 20 messages
     final toSave = _messages.length > 20 ? _messages.sublist(_messages.length - 20) : _messages;
     prefs.setString('propkeep_chat_history', json.encode(toSave));
   }
@@ -345,26 +183,98 @@ class _ChatScreenState extends State<ChatScreen> {
     _controller.clear();
     _saveHistory();
 
-    try {
-      final response = await PropkeepApi.ask(question, state: _selectedState);
-      setState(() {
-        _messages.add({
-          'role': 'assistant',
-          'text': response.answer,
-          'state': response.state,
-          'model': response.model,
-          'rag': response.contextUsed,
-          'error': response.error,
-        });
-        _loading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _messages.add({'role': 'assistant', 'text': 'Error: $e', 'error': true});
-        _loading = false;
-      });
+    String answer = '';
+    String source = '';
+    bool rag = false;
+    String? detectedState;
+
+    // Try online first (if hybrid or online mode)
+    if (_mode == AIMode.online || _mode == AIMode.hybrid) {
+      try {
+        final res = await http.post(
+          Uri.parse('$API_BASE/api/propkeep/ask/'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'question': question, if (_selectedState != null) 'state': _selectedState}),
+        ).timeout(Duration(seconds: 90));
+        
+        if (res.statusCode == 200) {
+          final data = json.decode(res.body);
+          answer = data['answer'] ?? '';
+          source = 'online';
+          rag = data['context_used'] ?? false;
+          detectedState = data['state'];
+        }
+      } catch (_) {
+        source = 'offline'; // Will try offline
+      }
     }
+
+    // If online failed or offline mode, use on-device
+    if (answer.isEmpty) {
+      source = 'offline';
+      
+      // Try on-device LLM if loaded
+      if (_llmLoaded) {
+        try {
+          answer = await OnDeviceLLM.generate(question, state: _selectedState);
+          rag = true;
+        } catch (_) {
+          answer = _knowledgeBaseFallback(question);
+        }
+      } else {
+        // Try to load the model on first use
+        if (_modelAvailable && !_llmLoaded) {
+          final loaded = await OnDeviceLLM.loadModel();
+          if (loaded) {
+            setState(() {
+              _llmLoaded = true;
+              _modelName = OnDeviceLLM.modelName;
+            });
+            answer = await OnDeviceLLM.generate(question, state: _selectedState);
+            rag = true;
+          } else {
+            answer = _knowledgeBaseFallback(question);
+          }
+        } else {
+          answer = _knowledgeBaseFallback(question);
+        }
+      }
+      
+      // Detect state for display
+      detectedState = _selectedState ?? KnowledgeBase.detectState(question);
+    }
+
+    setState(() {
+      _messages.add({
+        'role': 'assistant',
+        'text': answer,
+        'state': detectedState,
+        'source': source,
+        'rag': rag,
+        'model': _llmLoaded ? _modelName : 'knowledge_base',
+      });
+      _loading = false;
+    });
     _saveHistory();
+  }
+
+  String _knowledgeBaseFallback(String question) {
+    // Simple keyword matching from bundled knowledge base
+    var bestScore = 0.0;
+    Map<String, dynamic>? best;
+    for (var qa in KnowledgeBase.qaList) {
+      final qaText = (qa['question'] + ' ' + qa['answer']).toLowerCase();
+      double score = 0;
+      for (var word in question.toLowerCase().split(' ')) {
+        if (word.length > 3 && qaText.contains(word)) score += 1;
+      }
+      if (_selectedState != null && qa['state'] == _selectedState) score += 5;
+      if (score > bestScore) { bestScore = score; best = qa; }
+    }
+    if (best != null && bestScore > 0) {
+      return best!['answer'];
+    }
+    return 'No specific information found. Try online mode for more answers.';
   }
 
   void _clearHistory() {
@@ -378,30 +288,61 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: Text('🏠 PROPKEEP'),
         actions: [
+          // Mode indicator
+          PopupMenuButton<AIMode>(
+            icon: Icon(_mode == AIMode.online ? Icons.cloud : (_mode == AIMode.offline ? Icons.phone_android : Icons.swap_horiz)),
+            onSelected: (m) => setState(() => _mode = m),
+            itemBuilder: (ctx) => [
+              PopupMenuItem(value: AIMode.hybrid, child: Text('🔀 Hybrid (auto-switch)')),
+              PopupMenuItem(value: AIMode.online, child: Text('☁️ Online (server AI)')),
+              PopupMenuItem(value: AIMode.offline, child: Text('📱 Offline (on-device AI)')),
+            ],
+          ),
           if (_messages.isNotEmpty)
             IconButton(icon: Icon(Icons.delete_outline), onPressed: _clearHistory),
         ],
       ),
       body: Column(
         children: [
-          // Health banner
-          if (widget.health != null)
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              color: Color(0xFF0D1B2A),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _statChip('Q&A', widget.health!.qaPairs),
-                  _statChip('States', widget.health!.states),
-                  _statChip('Scenarios', widget.health!.scenarios),
-                ],
-              ),
+          // Status bar
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            color: Color(0xFF0D1B2A),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      _mode == AIMode.online ? Icons.cloud : (_mode == AIMode.offline ? Icons.phone_android : Icons.swap_horiz),
+                      size: 14, color: _mode == AIMode.online ? Colors.blue : Colors.green,
+                    ),
+                    SizedBox(width: 6),
+                    Text(
+                      _mode == AIMode.online ? 'Online' : (_mode == AIMode.offline ? 'Offline' : 'Hybrid'),
+                      style: TextStyle(color: Colors.white54, fontSize: 11),
+                    ),
+                  ],
+                ),
+                if (_llmLoaded)
+                  Row(
+                    children: [
+                      Icon(Icons.memory, size: 14, color: Colors.green),
+                      SizedBox(width: 4),
+                      Text(_modelName, style: TextStyle(color: Colors.green, fontSize: 11)),
+                    ],
+                  )
+                else if (_modelAvailable)
+                  Text('Model ready (tap Ask to load)', style: TextStyle(color: Colors.amber, fontSize: 11))
+                else
+                  Text('Online only', style: TextStyle(color: Colors.white30, fontSize: 11)),
+              ],
             ),
+          ),
 
           // State selector
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: DropdownButton<String>(
               value: _selectedState,
               hint: Text('All States (auto-detect)', style: TextStyle(color: Colors.white54, fontSize: 14)),
@@ -417,7 +358,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
           // Quick questions
           Container(
-            height: 44,
+            height: 40,
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -442,9 +383,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     padding: EdgeInsets.all(16),
                     itemCount: _messages.length + (_loading ? 1 : 0),
                     itemBuilder: (ctx, i) {
-                      if (i == _messages.length && _loading) {
-                        return _buildLoadingBubble();
-                      }
+                      if (i == _messages.length && _loading) return _buildLoadingBubble();
                       final msg = _messages[i];
                       return _buildMessageBubble(msg);
                     },
@@ -456,7 +395,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Color(0xFF151B2E),
-              border: Border(top: BorderSide(color: Colors.white12)),
+              border: Border(top: BorderSide(color: Colors.white10)),
             ),
             child: Row(
               children: [
@@ -488,26 +427,16 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _statChip(String label, int value) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(value.toString(), style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold)),
-        Text(label, style: TextStyle(color: Colors.white30, fontSize: 10)),
-      ],
-    );
-  }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.home_work, size: 64, color: Colors.white12),
+          Icon(Icons.home_work, size: 64, color: Colors.white10),
           SizedBox(height: 16),
           Text('Ask a property management question', style: TextStyle(color: Colors.white30, fontSize: 16)),
           SizedBox(height: 8),
-          Text('50 states + federal law knowledge base', style: TextStyle(color: Colors.white24, fontSize: 12)),
+          Text('50 states + PR · Federal law · On-device AI', style: TextStyle(color: Colors.white24, fontSize: 12)),
         ],
       ),
     );
@@ -517,7 +446,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SpinKitThreeBounce(color: Colors.green, size: 20),
           SizedBox(width: 12),
@@ -529,6 +457,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildMessageBubble(Map<String, dynamic> msg) {
     final isUser = msg['role'] == 'user';
+    final source = msg['source'] as String? ?? '';
+    final isOnline = source == 'online';
+    
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Align(
@@ -539,32 +470,45 @@ class _ChatScreenState extends State<ChatScreen> {
           decoration: BoxDecoration(
             color: isUser ? Colors.green.withOpacity(0.15) : Color(0xFF151B2E),
             borderRadius: BorderRadius.circular(12),
-            border: isUser ? null : Border.all(color: Colors.white12),
+            border: isUser ? null : Border.all(color: Colors.white10),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!isUser && msg['state'] != null)
+              if (!isUser)
                 Padding(
                   padding: EdgeInsets.only(bottom: 6),
                   child: Row(
                     children: [
-                      Icon(Icons.location_on, size: 12, color: Colors.lightBlueAccent),
-                      SizedBox(width: 4),
-                      Text(msg['state'], style: TextStyle(color: Colors.lightBlueAccent, fontSize: 11)),
+                      if (msg['state'] != null) ...[
+                        Icon(Icons.location_on, size: 12, color: Colors.lightBlueAccent),
+                        SizedBox(width: 4),
+                        Text(msg['state'], style: TextStyle(color: Colors.lightBlueAccent, fontSize: 11)),
+                      ],
                       if (msg['rag'] == true) ...[
                         SizedBox(width: 8),
                         Icon(Icons.library_books, size: 12, color: Colors.green),
                         SizedBox(width: 2),
                         Text('RAG', style: TextStyle(color: Colors.green, fontSize: 10)),
                       ],
+                      Spacer(),
+                      Icon(
+                        isOnline ? Icons.cloud : Icons.phone_android,
+                        size: 12,
+                        color: isOnline ? Colors.blue : Colors.green,
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        isOnline ? 'Online' : 'Offline',
+                        style: TextStyle(color: isOnline ? Colors.blue : Colors.green, fontSize: 10),
+                      ),
                     ],
                   ),
                 ),
               Text(
                 msg['text'],
                 style: TextStyle(
-                  color: isUser ? Colors.white : (msg['error'] == true ? Colors.red : Colors.white70),
+                  color: isUser ? Colors.white : Colors.white70,
                   fontSize: 14,
                   height: 1.5,
                 ),
@@ -578,9 +522,8 @@ class _ChatScreenState extends State<ChatScreen> {
 }
 
 // ============================================================
-// COMPLIANCE SCREEN — State-by-state quick facts
+// COMPLIANCE SCREEN
 // ============================================================
-
 class ComplianceScreen extends StatefulWidget {
   @override
   _ComplianceScreenState createState() => _ComplianceScreenState();
@@ -589,7 +532,7 @@ class ComplianceScreen extends StatefulWidget {
 class _ComplianceScreenState extends State<ComplianceScreen> {
   List<String> _states = [];
   String? _selectedState;
-  StateCompliance? _compliance;
+  Map<String, dynamic>? _compliance;
   bool _loading = false;
 
   @override
@@ -599,24 +542,25 @@ class _ComplianceScreenState extends State<ComplianceScreen> {
   }
 
   void _loadStates() async {
-    try {
-      final s = await PropkeepApi.getStates();
-      setState(() => _states = s);
-    } catch (e) {}
+    await KnowledgeBase.load();
+    setState(() => _states = KnowledgeBase.getStates());
   }
 
   void _lookup(String state) async {
-    setState(() {
-      _selectedState = state;
-      _loading = true;
-      _compliance = null;
-    });
+    setState(() { _selectedState = state; _loading = true; _compliance = null; });
+    
+    // Try online first
     try {
-      final c = await PropkeepApi.getCompliance(state);
-      setState(() { _compliance = c; _loading = false; });
-    } catch (e) {
-      setState(() => _loading = false);
-    }
+      final res = await http.get(Uri.parse('$API_BASE/api/propkeep/compliance/?state=${Uri.encodeComponent(state)}')).timeout(Duration(seconds: 5));
+      if (res.statusCode == 200) {
+        setState(() { _compliance = json.decode(res.body); _loading = false; });
+        return;
+      }
+    } catch (_) {}
+    
+    // Fallback to on-device
+    final c = KnowledgeBase.getStateCompliance(state);
+    setState(() { _compliance = c; _loading = false; });
   }
 
   @override
@@ -625,17 +569,11 @@ class _ComplianceScreenState extends State<ComplianceScreen> {
       appBar: AppBar(title: Text('📋 State Compliance')),
       body: Column(
         children: [
-          // State grid
           Expanded(
             flex: 2,
             child: GridView.builder(
               padding: EdgeInsets.all(12),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 2.5,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 2.5, crossAxisSpacing: 8, mainAxisSpacing: 8),
               itemCount: _states.length,
               itemBuilder: (ctx, i) {
                 final s = _states[i];
@@ -649,21 +587,12 @@ class _ComplianceScreenState extends State<ComplianceScreen> {
                       borderRadius: BorderRadius.circular(8),
                       border: isSelected ? Border.all(color: Colors.green) : Border.all(color: Colors.white12),
                     ),
-                    child: Text(
-                      s,
-                      style: TextStyle(
-                        color: isSelected ? Colors.green : Colors.white70,
-                        fontSize: 12,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    child: Text(s, style: TextStyle(color: isSelected ? Colors.green : Colors.white70, fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal), textAlign: TextAlign.center),
                   ),
                 );
               },
             ),
           ),
-          // Compliance details
           Expanded(
             flex: 3,
             child: _loading
@@ -677,54 +606,47 @@ class _ComplianceScreenState extends State<ComplianceScreen> {
     );
   }
 
-  Widget _buildComplianceCard(StateCompliance c) {
+  Widget _buildComplianceCard(Map<String, dynamic> c) {
     return Card(
       margin: EdgeInsets.all(12),
       child: Padding(
         padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(c.state, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.green)),
-            SizedBox(height: 16),
-            _complianceRow('Security Deposit Limit', c.securityDepositLimit),
-            _complianceRow('Deposit Return Deadline', '${c.depositReturnDeadlineDays} days'),
-            _complianceRow('Notice to Vacate', '${c.noticeToVacateDays} days'),
-            _complianceRow('Eviction Notice', '${c.evictionNoticeDays} days'),
-            _complianceRow('Rent Control', c.rentControl, highlight: c.rentControl.toLowerCase() != 'none'),
-          ],
-        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(c['state'] ?? '', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.green)),
+          SizedBox(height: 16),
+          _row('Security Deposit Limit', c['security_deposit_limit'] ?? 'No statutory limit'),
+          _row('Deposit Return Deadline', '${c['deposit_return_deadline_days'] ?? '?'} days'),
+          _row('Notice to Vacate', '${c['notice_to_vacate_days'] ?? '?'} days'),
+          _row('Eviction Notice', '${c['eviction_notice_days'] ?? '?'} days'),
+          _row('Rent Control', c['rent_control'] ?? 'None', highlight: (c['rent_control'] ?? 'none').toLowerCase() != 'none'),
+        ]),
       ),
     );
   }
 
-  Widget _complianceRow(String label, String value, {bool highlight = false}) {
+  Widget _row(String label, String value, {bool highlight = false}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: TextStyle(color: Colors.white30, fontSize: 11, fontWeight: FontWeight.w500)),
-          SizedBox(height: 4),
-          Text(value, style: TextStyle(color: highlight ? Colors.amber : Colors.white, fontSize: 14)),
-          Divider(color: Colors.white12),
-        ],
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(label, style: TextStyle(color: Colors.white30, fontSize: 11, fontWeight: FontWeight.w500)),
+        SizedBox(height: 4),
+        Text(value, style: TextStyle(color: highlight ? Colors.amber : Colors.white, fontSize: 14)),
+        Divider(color: Colors.white10),
+      ]),
     );
   }
 }
 
 // ============================================================
-// SCENARIOS SCREEN — Real-world compliance situations
+// SCENARIOS SCREEN
 // ============================================================
-
 class ScenariosScreen extends StatefulWidget {
   @override
   _ScenariosScreenState createState() => _ScenariosScreenState();
 }
 
 class _ScenariosScreenState extends State<ScenariosScreen> {
-  List<Scenario> _scenarios = [];
+  List<Map<String, dynamic>> _scenarios = [];
   bool _loading = true;
 
   @override
@@ -734,12 +656,8 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
   }
 
   void _loadScenarios() async {
-    try {
-      final s = await PropkeepApi.getScenarios();
-      setState(() { _scenarios = s; _loading = false; });
-    } catch (e) {
-      setState(() => _loading = false);
-    }
+    await KnowledgeBase.load();
+    setState(() { _scenarios = KnowledgeBase.getScenarios(); _loading = false; });
   }
 
   @override
@@ -756,44 +674,15 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
                 return Card(
                   margin: EdgeInsets.only(bottom: 12),
                   child: ExpansionTile(
-                    title: Text(sc.scenario, style: TextStyle(color: Colors.amber, fontSize: 14, fontWeight: FontWeight.w600)),
+                    title: Text(sc['scenario'] ?? '', style: TextStyle(color: Colors.amber, fontSize: 14, fontWeight: FontWeight.w600)),
                     children: [
                       Padding(
                         padding: EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.check_circle, color: Colors.green, size: 16),
-                                SizedBox(width: 6),
-                                Text('CORRECT ACTION', style: TextStyle(color: Colors.green, fontSize: 12, fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            Text(sc.correctAction, style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.5)),
-                            SizedBox(height: 16),
-                            Row(
-                              children: [
-                                Icon(Icons.cancel, color: Colors.red, size: 16),
-                                SizedBox(width: 6),
-                                Text('COMMON MISTAKE', style: TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            Text(sc.commonMistake, style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.5)),
-                            SizedBox(height: 16),
-                            Row(
-                              children: [
-                                Icon(Icons.attach_money, color: Colors.orange, size: 16),
-                                SizedBox(width: 6),
-                                Text('PENALTY IF WRONG', style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            Text(sc.penaltyIfWrong, style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.5)),
-                          ],
-                        ),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          _scRow(Icons.check_circle, 'CORRECT ACTION', sc['correct_action'] ?? '', Colors.green),
+                          _scRow(Icons.cancel, 'COMMON MISTAKE', sc['common_mistake'] ?? '', Colors.red),
+                          _scRow(Icons.attach_money, 'PENALTY IF WRONG', sc['penalty_if_wrong'] ?? '', Colors.orange),
+                        ]),
                       ),
                     ],
                   ),
@@ -801,5 +690,14 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
               },
             ),
     );
+  }
+
+  Widget _scRow(IconData icon, String label, String text, Color color) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(children: [Icon(icon, color: color, size: 16), SizedBox(width: 6), Text(label, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.bold))]),
+      SizedBox(height: 8),
+      Text(text, style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.5)),
+      SizedBox(height: 16),
+    ]);
   }
 }

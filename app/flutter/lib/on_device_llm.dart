@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter_litert_lm/flutter_litert_lm.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:async';
 import 'on_device_ai.dart';
 
 class OnDeviceLLM {
@@ -18,17 +19,30 @@ class OnDeviceLLM {
     final locations = <String>[];
     
     // 1. App private storage (where downloaded models go)
-    final dir = await getApplicationDocumentsDirectory();
-    locations.add('${dir.path}/gemma4-e2b.litertlm');
-    locations.add('${dir.path}/qwen3-0.6b.litertlm');
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      locations.add('${dir.path}/gemma4-e2b.litertlm');
+      locations.add('${dir.path}/qwen3-0.6b.litertlm');
+    } catch (_) {}
     
-    // 2. External storage / Download folder (where adb push goes)
+    // 2. App external storage (app-specific, always readable)
+    try {
+      final extDir = await getExternalStorageDirectory();
+      if (extDir != null) {
+        locations.add('${extDir.path}/gemma4-e2b.litertlm');
+        locations.add('${extDir.path}/qwen3-0.6b.litertlm');
+        locations.add('${extDir.path}/Download/gemma4-e2b.litertlm');
+        locations.add('${extDir.path}/Download/qwen3-0.6b.litertlm');
+      }
+    } catch (_) {}
+    
+    // 3. Public Download folders (may need storage permission)
     locations.add('/sdcard/Download/gemma4-e2b.litertlm');
     locations.add('/sdcard/Download/qwen3-0.6b.litertlm');
     locations.add('/storage/emulated/0/Download/gemma4-e2b.litertlm');
     locations.add('/storage/emulated/0/Download/qwen3-0.6b.litertlm');
     
-    // 3. /data/local/tmp (where adb push goes by default)
+    // 4. /data/local/tmp (where adb push goes)
     locations.add('/data/local/tmp/gemma4-e2b.litertlm');
     locations.add('/data/local/tmp/qwen3-0.6b.litertlm');
     

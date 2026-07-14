@@ -408,7 +408,7 @@ class _ChatScreenState extends State<ChatScreen> {
         SizedBox(height: 16),
         Text('Ask a property management question', style: TextStyle(color: Colors.white30, fontSize: Screen.scaleFont(context, 16))),
         SizedBox(height: 8),
-        Text('52 states + PR · Federal law · On-device AI', style: TextStyle(color: Colors.white20, fontSize: Screen.scaleFont(context, 11))),
+        Text('52 states + PR · Federal law · On-device AI', style: TextStyle(color: Colors.white24, fontSize: Screen.scaleFont(context, 11))),
       ],
     ));
   }

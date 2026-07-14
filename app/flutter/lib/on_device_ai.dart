@@ -77,7 +77,7 @@ class KnowledgeBase {
       'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon',
       'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
       'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
-      'West Virginia', 'Wisconsin', 'Wyoming', 'Washington DC'
+      'West Virginia', 'Wisconsin', 'Wyoming', 'Washington DC', 'Puerto Rico'
     ];
     
     final abbrevs = {
@@ -94,6 +94,7 @@ class KnowledgeBase {
       'ME': 'Maine', 'MT': 'Montana', 'RI': 'Rhode Island', 'DE': 'Delaware',
       'AK': 'Alaska', 'HI': 'Hawaii', 'ND': 'North Dakota', 'SD': 'South Dakota',
       'VT': 'Vermont', 'WY': 'Wyoming', 'DC': 'Washington DC',
+      'PR': 'Puerto Rico',
     };
     
     for (var state in states) {

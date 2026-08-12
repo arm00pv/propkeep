@@ -136,7 +136,6 @@ CONSTRAINT_PATTERNS = [
 def scan_constraints(text: str, state: str = None) -> list:
     """Scan lease/policy text for compliance constraints.
     Returns a list of findings: {type, label, match, context}."""
-    import re
     findings = []
     if not text:
         return findings

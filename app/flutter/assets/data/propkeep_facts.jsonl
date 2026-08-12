@@ -1,0 +1,24 @@
+{"source": "Fair Housing Act", "relation": "prohibits_discrimination_based_on", "target": "race, color, religion, sex, disability, familial status, national origin", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "Fair Housing Act", "relation": "protected_classes", "target": "7 classes: race, color, religion, sex, disability, familial status, national origin", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "Fair Housing Act", "relation": "applies_to", "target": "all rental housing, sales, advertising, and financing", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "Fair Housing Act", "relation": "exemption", "target": "owner-occupied buildings with 4 or fewer units (Mrs. Murphy exemption)", "domain": "propkeep_federal", "confidence": 0.9}
+{"source": "Fair Housing Act", "relation": "penalty", "target": "civil penalties up to $16,000 for first violation, $65,000 for subsequent", "domain": "propkeep_federal", "confidence": 0.95}
+{"source": "familial status", "relation": "means", "target": "households with children under 18, pregnant women, or those seeking custody", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "disability", "relation": "requires", "target": "reasonable accommodations and modifications at landlord expense for common areas, tenant expense for interior", "domain": "propkeep_federal", "confidence": 0.9}
+{"source": "assistance animals", "relation": "not_pet", "target": "emotional support and service animals are not pets under FHA, no pet fees allowed", "domain": "propkeep_federal", "confidence": 0.95}
+{"source": "Americans with Disabilities Act", "relation": "applies_to", "target": "public accommodations and commercial facilities, NOT private residential rentals", "domain": "propkeep_federal", "confidence": 0.9}
+{"source": "ADA", "relation": "rental_application_exception", "target": "applies to rental offices and common areas open to public, not individual units", "domain": "propkeep_federal", "confidence": 0.85}
+{"source": "Lead-Based Paint Hazard Reduction Act", "relation": "requires", "target": "landlords must disclose known lead-based paint for buildings built before 1978", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "Lead-Based Paint Hazard Reduction Act", "relation": "requires_form", "target": "EPA disclosure form must be signed by tenant before lease signing", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "Lead-Based Paint Hazard Reduction Act", "relation": "requires_pamphlet", "target": "EPA pamphlet 'Protect Your Family from Lead in Your Home' must be provided", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "Lead-Based Paint Hazard Reduction Act", "relation": "penalty", "target": "up to $16,000 per violation per day for non-disclosure", "domain": "propkeep_federal", "confidence": 0.9}
+{"source": "Lead-Based Paint Hazard Reduction Act", "relation": "exemption", "target": "buildings built after 1977 are exempt from lead paint disclosure requirements", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "HUD", "relation": "security_deposit_guideline", "target": "no federal limit on security deposit amount, states set their own limits", "domain": "propkeep_federal", "confidence": 0.9}
+{"source": "HUD", "relation": "habitability_standard", "target": "landlords must maintain rental units in habitable condition regardless of lease terms", "domain": "propkeep_federal", "confidence": 0.95}
+{"source": "implied warranty of habitability", "relation": "requires", "target": "working plumbing, heating, electrical, safe structure, hot water, trash receptacles", "domain": "propkeep_federal", "confidence": 0.9}
+{"source": "federal eviction law", "relation": "requires", "target": "proper written notice before eviction, court process required for removal", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "federal eviction law", "relation": "prohibits", "target": "self-help evictions (changing locks, removing belongings, shutting off utilities)", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "self-help eviction", "relation": "penalty", "target": "tenant can sue for actual damages plus punitive damages in most states", "domain": "propkeep_federal", "confidence": 0.85}
+{"source": "Fair Credit Reporting Act", "relation": "requires", "target": "landlord must get written consent before pulling tenant credit report", "domain": "propkeep_federal", "confidence": 1.0}
+{"source": "FCRA", "relation": "adverse_action", "target": "if denied based on credit report, landlord must provide adverse action notice with report source", "domain": "propkeep_federal", "confidence": 0.95}
+{"source": "FCRA", "relation": "retention", "target": "tenant screening reports must be retained for minimum 5 years from date of report", "domain": "propkeep_federal", "confidence": 0.9}
